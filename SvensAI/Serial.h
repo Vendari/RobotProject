@@ -6,7 +6,6 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <memory>
 
 class Serial
 {
@@ -31,10 +30,10 @@ public:
 	//maximum number of bytes available, it will return only the
 	//bytes available. The function return -1 when nothing could
 	//be read, the number of bytes actually read.
-	int ReadData(std::shared_ptr<char[]> buffer, unsigned int nbChar);
+	int ReadData(char* buffer, unsigned int nbChar);
 	//Writes data from a buffer through the Serial connection
 	//return true on success.
-	bool WriteData(std::shared_ptr<char[]> buffer, unsigned int nbChar);
+	bool WriteData(char* buffer, unsigned int nbChar);
 	//Check if we are actually connected
 	bool IsConnected();
 

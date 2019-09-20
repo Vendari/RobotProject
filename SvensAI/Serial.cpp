@@ -43,7 +43,7 @@ Serial::Serial(char* portName)
 		else
 		{
 			//Define serial connection parameters for the arduino board
-			dcbSerialParams.BaudRate = CBR_115200;
+			dcbSerialParams.BaudRate = CBR_9600;
 			dcbSerialParams.ByteSize = 8;
 			dcbSerialParams.StopBits = ONESTOPBIT;
 			dcbSerialParams.Parity = NOPARITY;
@@ -59,8 +59,7 @@ Serial::Serial(char* portName)
 				this->connected = true;
 				//We wait 2s as the arduino board will be reseting
 				Sleep(ARDUINO_WAIT_TIME);
-
-				printf("Successfully conected to port %s\n", portName);
+				printf("Successfully connected to port %s", portName);
 			}
 		}
 	}
@@ -79,7 +78,7 @@ Serial::~Serial()
 	}
 }
 
-int Serial::ReadData(std::shared_ptr<char[]> buffer, unsigned int nbChar)
+int Serial::ReadData(char* buffer, unsigned int nbChar)
 {
 	//Number of bytes we'll have read
 	DWORD bytesRead;
@@ -105,7 +104,7 @@ int Serial::ReadData(std::shared_ptr<char[]> buffer, unsigned int nbChar)
 		}
 
 		//Try to read the require number of chars, and return the number of read bytes on success
-		if (ReadFile(this->hSerial, &buffer, toRead, &bytesRead, NULL) && bytesRead != 0)
+		if (ReadFile(this->hSerial, buffer, toRead, &bytesRead, NULL) && bytesRead != 0)
 		{
 			return bytesRead;
 		}
@@ -118,12 +117,12 @@ int Serial::ReadData(std::shared_ptr<char[]> buffer, unsigned int nbChar)
 }
 
 
-bool Serial::WriteData(std::shared_ptr<char[]> buffer, unsigned int nbChar)
+bool Serial::WriteData(char* buffer, unsigned int nbChar)
 {
 	DWORD bytesSend;
 
 	//Try to write the buffer on the Serial port
-	if (!WriteFile(this->hSerial, &buffer, nbChar, &bytesSend, 0))
+	if (!WriteFile(this->hSerial, (void*)buffer, nbChar, &bytesSend, 0))
 	{
 		//In case it don't work get comm error and return false
 		ClearCommError(this->hSerial, &this->errors, &this->status);

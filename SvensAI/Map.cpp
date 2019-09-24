@@ -1,6 +1,6 @@
 ﻿#include "Map.h"
 
-Map::Map(std::vector<Point> map, unsigned int startPossition) : m_map { map }, m_position {startPossition} {
+Map::Map(std::vector<Point> map, unsigned int startPossition, Direction startDirection) : m_map{ map }, m_position{ startPossition }, m_direction{ startDirection } {
 }
 
 void Map::move(Direction direction)
@@ -22,52 +22,53 @@ void Map::move(Direction direction)
 	}
 }
 
-std::stack<Map::Direction> Map::getDirections(unsigned int destinationPoint) {
+int Map::setDirections(unsigned int destinationPoint) {
 
 	std::stack<Direction> result;
 
 	std::vector<bool> visited(m_map.size(), false);
 	std::vector<int> distances(m_map.size(), INT16_MAX);
-	std::queue<Point> pointsQueue;
+	std::queue<std::pair<Point, int>> pointsQueue;
 
 	int pos = m_position;
-	int distance = 1;
-	pointsQueue.push(m_map[pos]);
+	int distance = 0;
+	pointsQueue.push(std::make_pair(m_map[pos], distance));
 	distances[pos] = 0;
 
 	while (true) { //BFS searching (distance marking)
-		pos = pointsQueue.front().number;
+		pos = pointsQueue.front().first.number;
 		if (pos == destinationPoint)
 			break;
 		visited[pos] = true;
+		distance = pointsQueue.front().second+1;
 		pointsQueue.pop();
 		for (int i = 0; i < 4; i++) {
 			switch (i)
 			{
 			case 0:
 				if (m_map[pos].north != -1 && !visited[m_map[pos].north]) {
-					pointsQueue.push(m_map[m_map[pos].north]);
+					pointsQueue.push(std::make_pair(m_map[m_map[pos].north], distance));
 					if(distances[m_map[pos].north] > distance)
 					distances[m_map[pos].north] = distance;
 				}
 				break;
 			case 1:
 				if (m_map[pos].east != -1 && !visited[m_map[pos].east]) {
-					pointsQueue.push(m_map[m_map[pos].east]);
+					pointsQueue.push(std::make_pair(m_map[m_map[pos].east], distance));
 					if (distances[m_map[pos].east] > distance)
 					distances[m_map[pos].east] = distance;
 				}
 				break;
 			case 2:
 				if (m_map[pos].west != -1 && !visited[m_map[pos].west]) {
-					pointsQueue.push(m_map[m_map[pos].west]);
+					pointsQueue.push(std::make_pair(m_map[m_map[pos].west], distance));
 					if (distances[m_map[pos].west] > distance)
 					distances[m_map[pos].west] = distance;
 				}
 				break;
 			case 3:
 				if (m_map[pos].south != -1 && !visited[m_map[pos].south]) {
-					pointsQueue.push(m_map[m_map[pos].south]);
+					pointsQueue.push(std::make_pair(m_map[m_map[pos].south], distance));
 					if (distances[m_map[pos].south] > distance)
 						distances[m_map[pos].south] = distance;
 				}
@@ -113,5 +114,39 @@ std::stack<Map::Direction> Map::getDirections(unsigned int destinationPoint) {
 		distance--;
 	}
 
-	return result;
+	m_moveStack = result;
+	return result.size();
+}
+
+Map::MoveDirection Map::moveNext()
+{
+	Direction stackTop = m_moveStack.top();
+	m_moveStack.pop();
+
+	move(stackTop);
+
+	switch (m_direction)
+	{
+	case north:
+		if (stackTop == north) return foward;
+		if (stackTop == east)  return right;
+		if (stackTop == west)  return left;
+		break;
+	case east:
+		if (stackTop == north) return left;
+		if (stackTop == east)  return foward;
+		if (stackTop == south) return right;
+		break;
+	case west:
+		if (stackTop == north) return right;
+		if (stackTop == south) return left;
+		if (stackTop == west)  return foward;
+		break;
+	case south:
+		if (stackTop == east)  return left;
+		if (stackTop == south) return foward;
+		if (stackTop == west)  return right;
+	}
+
+	return MoveDirection();
 }

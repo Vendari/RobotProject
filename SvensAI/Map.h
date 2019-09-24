@@ -17,6 +17,12 @@ public:
 		west
 	};
 
+	enum MoveDirection {
+		foward = 0,
+		right,
+		left
+	};
+
 	struct Point {
 		Place place;
 		int number;
@@ -27,25 +33,37 @@ public:
 		std::vector<bool> connections;
 	};
 
-	Map(std::vector<Point> map, unsigned int startPossition);
+	Map(std::vector<Point> map, unsigned int startPossition, Direction startDirection);
 
 	///<summary>
-	///Changes current possition to node that is in passed direction
+	///Sets directions to destinatnion point in m_moveQueue and returns lenght of moveStack
 	///</summary>
-	void move(Direction direction);
+	int setDirections(unsigned int destinationPoint);
 
 	///<summary>
-	///Returns stack data structure with directions (north, eas, south, west) to passed direction point from actual possition
+	///Returns in which direction Robot should turn
 	///</summary>
-	std::stack<Direction> getDirections(unsigned int destinationPoint);
+	MoveDirection moveNext();
 
 	///<summary>
 	///Returns actual robot position
 	///</summary>
 	unsigned int getPosition() { return m_position; }
 
+	///<summary>
+	///Returns actual robot direction
+	///</summary>
+	Direction getDirection() { return m_direction; }
+
 private:
-	std::vector<Point> m_map; //map data
-	unsigned int m_position;  //current possition
+	///<summary>
+	///Changes current possition to node that is in passed direction
+	///</summary>
+	void move(Direction direction);
+
+	std::vector<Point> m_map;		   //map data
+	unsigned int m_position;		   //current possition
+	Direction m_direction;			   //current robot direction
+	std::stack<Direction> m_moveStack; //store current path to destination
 };
 

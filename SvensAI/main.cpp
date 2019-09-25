@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 #include <stack>
+#include <thread>
+#include <chrono>
 
 #include "Serial.h"
 #include "Sensor.h"
@@ -14,9 +16,9 @@
 int main() {
 
 #pragma region Settings
-	char* comPort = new char[10] {"\\\\.\\COM3"};									//need to be set up to mBot COM port
+	char* comPort = new char[10] {"\\\\.\\COM6"};									//need to be set up to mBot COM port
 	int readBufferSize = 2;
-	int writeBufferSize = 2;
+	int writeBufferSize = 1;
 	int sensorsSize = 2;
 	using LightSensorState = LightSensor::LightSensorState;
 
@@ -24,15 +26,13 @@ int main() {
 	std::vector<Point> map{
 	//	{{<Place name>}, <number of node>, <foward node>, <right node>, <left node>, <back node>, {<connections>}}
 	//																							  {0,1,2,3,4,5}
-		{{"crossroad"},		0,				  3,			 1,				 5,			-1,		  {0,1,0,1,0,0}},
-		{{"crossroad"},		1,				  2,			-1,				 0,			-1,		  {1,0,1,0,0,0}},
-		{{"crossroad"},		2,				 -1,			-1,				 3,			 1,		  {0,1,0,1,0,0}},
-		{{"crossroad"},		3,				 -1,			 2,				 4,			 0,		  {1,0,1,0,1,0}},
-		{{"crossroad"},		4,				 -1,			 3,				-1,			 5,		  {0,0,0,0,0,0}},
-		{{"crossroad"},		5,				  4,			 0,				-1,			-1,		  {1,0,0,0,1,0}}
+		{{"crossroad"},		0,				  3,			 1,				 -1,		-1,		  {0,1,0,1}},
+		{{"crossroad"},		1,				  2,			-1,				 0,			-1,		  {1,0,1,0}},
+		{{"crossroad"},		2,				 -1,			-1,				 3,			 1,		  {0,1,0,1}},
+		{{"crossroad"},		3,				 -1,			 2,				 -1,		 0,		  {1,0,1,0}}
 	};
 	
-	std::shared_ptr<Map> map_ptr = std::make_shared<Map>(std::move(map), 2, Map::Direction::west);		//map object that will calculate directions to move by robot - (will be) shared with AI
+	std::shared_ptr<Map> map_ptr = std::make_shared<Map>(std::move(map), 0, Map::Direction::north);		//map object that will calculate directions to move by robot - (will be) shared with AI
 
 #pragma endregion
 
@@ -47,7 +47,10 @@ int main() {
 	
 	bool mFlag = true;																//flag for main AI loop
 
-	int pathLenght = map_ptr->setDirections(5);										//store data about robot path lenght
+	int pathLenght = map_ptr->setDirections(2);										//store data about robot path lenght
+
+	int lastLightSensorValue, lastSonicSensorValue;									//store lasts sensor data to not overprint the console and to make synchronous movement
+	lastLightSensorValue = lastSonicSensorValue = 0;
 
 	while (mFlag && serial->IsConnected()) {										//main AI loop
 		if (serial->ReadData(readBuffer, readBufferSize)!=-1) {						//get data to readBuffer
@@ -68,24 +71,27 @@ int main() {
 
 				switch (sensors[0]->getValue())										//Light sensor switch
 				{
-				case LightSensorState::foward:
+				case 0:
 					
 					break;
-				case LightSensorState::right:
+				case 1:
+					                          
+					break;
+				case 2:
 
 					break;
-				case LightSensorState::left:
-
-					break;
-				case LightSensorState::stop:
-					if (pathLenght > 0) {
+				case 3:
+					if (pathLenght > 0 && (sensors[0]->getValue() != lastLightSensorValue)) {
 						Map::MoveDirection moveDir = map_ptr->moveNext();
-						writebuffer = new char[writeBufferSize] {'0', static_cast<char>(moveDir)}; //0 - move function, {0 - foward, 1 - turn right, 2 - turn left}
-						serial->WriteData(writebuffer, 2);
+						writebuffer = new char[writeBufferSize] {static_cast<char>(moveDir)}; //0 - move function, {0 - foward, 1 - turn right, 2 - turn left}
+						serial->WriteData(writebuffer, writeBufferSize);
+						pathLenght--;
+						std::this_thread::sleep_for(std::chrono::seconds(3));
 					}
 					break;
-				default:
-					break;
+				}
+				if (sensors[0]->getValue() != lastLightSensorValue) {
+					lastLightSensorValue = sensors[0]->getValue();
 				}
 		}
 	}

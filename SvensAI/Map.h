@@ -36,7 +36,7 @@ public:
 	Map(std::vector<Point> map, unsigned int startPossition, Direction startDirection);
 
 	///<summary>
-	///Sets directions to destinatnion point in m_moveQueue and returns lenght of moveStack
+	///Sets directions to destination point in m_moveStack and returns lenght of m_moveStack
 	///</summary>
 	int setDirections(unsigned int destinationPoint);
 

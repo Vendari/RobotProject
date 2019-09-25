@@ -123,29 +123,55 @@ Map::MoveDirection Map::moveNext()
 	Direction stackTop = m_moveStack.top();
 	m_moveStack.pop();
 
+	printf("Moving: %d", stackTop);
+
 	move(stackTop);
 
 	switch (m_direction)
 	{
 	case north:
 		if (stackTop == north) return foward;
-		if (stackTop == east)  return right;
-		if (stackTop == west)  return left;
+		if (stackTop == east) {
+			m_direction = east;
+			return right;
+		}
+		if (stackTop == west) {
+			m_direction = west;
+			return left;
+		}
 		break;
 	case east:
-		if (stackTop == north) return left;
+		if (stackTop == north) {
+			m_direction = north;
+			return left;
+		}
 		if (stackTop == east)  return foward;
-		if (stackTop == south) return right;
+		if (stackTop == south) {
+			m_direction = south;
+			return right;
+		}
 		break;
 	case west:
-		if (stackTop == north) return right;
-		if (stackTop == south) return left;
+		if (stackTop == north) {
+			m_direction = north;
+			return right;
+		}
+		if (stackTop == south) {
+			m_direction = south;
+			return left;
+		}
 		if (stackTop == west)  return foward;
 		break;
 	case south:
-		if (stackTop == east)  return left;
+		if (stackTop == east) { 
+			m_direction = east;
+			return left;
+		}
 		if (stackTop == south) return foward;
-		if (stackTop == west)  return right;
+		if (stackTop == west) { 
+			m_direction = west;
+			return right;
+		}
 	}
 
 	return MoveDirection();

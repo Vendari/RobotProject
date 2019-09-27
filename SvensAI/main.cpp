@@ -1,6 +1,6 @@
 #include <string>
 #include <tchar.h>
-#include <stdio.h>
+#include <iostream>
 #include <memory>
 #include <vector>
 #include <stack>
@@ -32,7 +32,7 @@ int main() {
 		{{"crossroad"},		3,				 -1,			 2,				 -1,		 0,		  {1,0,1,0}}
 	};
 	
-	std::shared_ptr<Map> map_ptr = std::make_shared<Map>(std::move(map), 0, Map::Direction::north);		//map object that will calculate directions to move by robot - (will be) shared with AI
+	std::shared_ptr<Map> map_ptr = std::make_shared<Map>(std::move(map), 0, Map::Direction::west);		//map object that will calculate directions to move by robot - (will be) shared with AI
 
 #pragma endregion
 
@@ -47,7 +47,7 @@ int main() {
 	
 	bool mFlag = true;																//flag for main AI loop
 
-	int pathLenght = map_ptr->setDirections(2);										//store data about robot path lenght
+	int pathLenght = map_ptr->setDirections(1);										//store data about robot path lenght
 
 	int lastLightSensorValue, lastSonicSensorValue;									//store lasts sensor data to not overprint the console and to make synchronous movement
 	lastLightSensorValue = lastSonicSensorValue = 0;
@@ -69,6 +69,7 @@ int main() {
 				}
 			}
 
+#pragma region LightSensor
 				switch (sensors[0]->getValue())										//Light sensor switch
 				{
 				case 0:
@@ -88,8 +89,15 @@ int main() {
 						pathLenght--;
 						std::this_thread::sleep_for(std::chrono::seconds(3));
 					}
+					else if (pathLenght == 0) {
+						int direction;
+						printf("Enter another direction: ");
+						std::cin >> direction;
+						pathLenght = map_ptr->setDirections(direction);
+					}
 					break;
 				}
+#pragma endregion
 				if (sensors[0]->getValue() != lastLightSensorValue) {
 					lastLightSensorValue = sensors[0]->getValue();
 				}

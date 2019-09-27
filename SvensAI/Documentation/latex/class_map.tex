@@ -1,0 +1,73 @@
+\hypertarget{class_map}{}\doxysection{Map Class Reference}
+\label{class_map}\index{Map@{Map}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_map_1_1_point}{Point}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_map_a41e006125c3e8cfb4c66a0d18e6a8472}\label{class_map_a41e006125c3e8cfb4c66a0d18e6a8472}} 
+enum {\bfseries Direction} \{ {\bfseries north} = 0, 
+{\bfseries east}, 
+{\bfseries south}, 
+{\bfseries west}
+ \}
+\item 
+\mbox{\Hypertarget{class_map_a340b64a983e0a831e75385d831a5af3d}\label{class_map_a340b64a983e0a831e75385d831a5af3d}} 
+enum {\bfseries Move\+Direction} \{ {\bfseries foward} = 0, 
+{\bfseries right}, 
+{\bfseries left}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_map_a9064c6a79cf7d87fb34c519e8e8a543a}{Map}} (std\+::vector$<$ \mbox{\hyperlink{struct_map_1_1_point}{Point}} $>$ map, unsigned int start\+Possition, Direction start\+Direction)
+\item 
+int \mbox{\hyperlink{class_map_a7a16a7ef4218184a04f9dbf5f842bf28}{set\+Directions}} (unsigned int destination\+Point)
+\item 
+Move\+Direction \mbox{\hyperlink{class_map_a0e0961dc1e75cc847db512cb7f9fefbc}{move\+Next}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_map_a101c3d6c782761bf71fb4e12f11f6e8e}{get\+Position}} ()
+\item 
+\mbox{\Hypertarget{class_map_a7527fced6adaeb509d55e09b06735168}\label{class_map_a7527fced6adaeb509d55e09b06735168}} 
+Direction {\bfseries get\+Direction} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_map_a9064c6a79cf7d87fb34c519e8e8a543a}\label{class_map_a9064c6a79cf7d87fb34c519e8e8a543a}} 
+\index{Map@{Map}!Map@{Map}}
+\index{Map@{Map}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{Map()}{Map()}}
+{\footnotesize\ttfamily Map\+::\+Map (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{struct_map_1_1_point}{Point}} $>$}]{map,  }\item[{unsigned int}]{start\+Possition,  }\item[{Direction}]{start\+Direction }\end{DoxyParamCaption})}
+
+summary$>$ Sets directions to destination point in m\+\_\+move\+Stack and returns lenght of m\+\_\+move\+Stack /summary$>$ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_map_a101c3d6c782761bf71fb4e12f11f6e8e}\label{class_map_a101c3d6c782761bf71fb4e12f11f6e8e}} 
+\index{Map@{Map}!getPosition@{getPosition}}
+\index{getPosition@{getPosition}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{getPosition()}{getPosition()}}
+{\footnotesize\ttfamily unsigned int Map\+::get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+summary$>$ Returns actual robot direction /summary$>$ \mbox{\Hypertarget{class_map_a0e0961dc1e75cc847db512cb7f9fefbc}\label{class_map_a0e0961dc1e75cc847db512cb7f9fefbc}} 
+\index{Map@{Map}!moveNext@{moveNext}}
+\index{moveNext@{moveNext}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{moveNext()}{moveNext()}}
+{\footnotesize\ttfamily Map\+::\+Move\+Direction Map\+::move\+Next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+summary$>$ Returns actual robot position /summary$>$ \mbox{\Hypertarget{class_map_a7a16a7ef4218184a04f9dbf5f842bf28}\label{class_map_a7a16a7ef4218184a04f9dbf5f842bf28}} 
+\index{Map@{Map}!setDirections@{setDirections}}
+\index{setDirections@{setDirections}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{setDirections()}{setDirections()}}
+{\footnotesize\ttfamily int Map\+::set\+Directions (\begin{DoxyParamCaption}\item[{unsigned int}]{destination\+Point }\end{DoxyParamCaption})}
+
+summary$>$ Returns in which direction Robot should turn /summary$>$ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Goura/source/repos/\+Robot\+Project/\+Svens\+A\+I/Map.\+h\item 
+C\+:/\+Users/\+Goura/source/repos/\+Robot\+Project/\+Svens\+A\+I/Map.\+cpp\end{DoxyCompactItemize}

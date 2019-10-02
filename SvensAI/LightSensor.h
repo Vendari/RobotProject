@@ -5,10 +5,10 @@ class LightSensor :
 {
 public:
 	enum LightSensorState {
-		stop = 0,
-		right,
-		left,
-		foward
+		stop = 3,
+		right = 2,
+		left = 1,
+		foward = 0
 	};
 
 	void setValue(int value);

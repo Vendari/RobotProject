@@ -33,6 +33,12 @@
     <ClCompile Include="Place.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sven.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Inteligence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Serial.h">
@@ -51,6 +57,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Place.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sven.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Inteligence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

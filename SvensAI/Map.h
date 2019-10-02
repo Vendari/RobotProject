@@ -51,6 +51,11 @@ public:
 	unsigned int getPosition() { return m_position; }
 
 	///<summary>
+	///Returns actual robot positions place type
+	///</summary>
+	Place::Type getPlace() { return m_map[m_position].place.m_type; }
+
+	///<summary>
 	///Returns actual robot direction
 	///</summary>
 	Direction getDirection() { return m_direction; }

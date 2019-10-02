@@ -124,20 +124,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Inteligence.cpp" />
     <ClCompile Include="LightSensor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Place.cpp" />
     <ClCompile Include="Serial.cpp" />
     <ClCompile Include="SonicSensor.cpp" />
+    <ClCompile Include="Sven.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Inteligence.h" />
     <ClInclude Include="LightSensor.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Place.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="Serial.h" />
     <ClInclude Include="SonicSensor.h" />
+    <ClInclude Include="Sven.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ThingsUsed.txt" />

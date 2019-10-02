@@ -4,8 +4,16 @@
 class Place
 {
 public:
-	Place(std::string name);
+	enum Type {
+		Restaurant = 0,
+		Work,
+		Home,
+		Toilet,
+		Crossroad
+	};
 
-	std::string m_name;
+	Place(Type type);
+
+	Type m_type;
 };
 

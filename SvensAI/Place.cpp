@@ -1,6 +1,6 @@
 #include "Place.h"
 
-Place::Place(std::string name)
+Place::Place(Type type)
 {
-	m_name = name;
+	m_type = type;
 }

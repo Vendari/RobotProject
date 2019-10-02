@@ -49,7 +49,7 @@ int Map::setDirections(unsigned int destinationPoint) {
 		distance = pointsQueue.front().second+1;
 		pointsQueue.pop();
 		for (int i = 0; i < 4; i++) {
-			switch (i)
+			switch (i) // i stands for 4 directions 0-north ¦ 1-east ¦ 2-west ¦ 3-south
 			{
 			case 0:
 				if (m_map[pos].north != -1 && !visited[m_map[pos].north]) {

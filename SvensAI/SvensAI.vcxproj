@@ -87,6 +87,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Program Files\Cpp_Libs\boost_1_71_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,11 +126,15 @@
   <ItemGroup>
     <ClCompile Include="LightSensor.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Place.cpp" />
     <ClCompile Include="Serial.cpp" />
     <ClCompile Include="SonicSensor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LightSensor.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Place.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="Serial.h" />
     <ClInclude Include="SonicSensor.h" />

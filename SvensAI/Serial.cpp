@@ -59,7 +59,7 @@ Serial::Serial(char* portName)
 				this->connected = true;
 				//We wait 2s as the arduino board will be reseting
 				Sleep(ARDUINO_WAIT_TIME);
-				printf("Successfully connected to port %s", portName);
+				printf("Successfully connected to port %s\n", portName);
 			}
 		}
 	}
